@@ -25,13 +25,17 @@ pip install keras-recommenders
 ```python
 from keras_recommenders.ple import PLE 
 
-model = PLE(dnn_feature_columns, num_tasks=2, task_types=['binary', 'regression'], \ task_names=['task 1','task 2'], num_levels=2, num_experts_specific=8, \ num_experts_shared=4, expert_dnn_units=[64,64], gate_dnn_units=[16,16], \ tower_dnn_units_lists=[[32,32],[32,32]])
+model = PLE(dnn_feature_columns, num_tasks=2, task_types=['binary', 'regression'], 
+            task_names=['task 1','task 2'], num_levels=2, num_experts_specific=8,
+            num_experts_shared=4, expert_dnn_units=[64,64], gate_dnn_units=[16,16],
+            tower_dnn_units_lists=[[32,32],[32,32]])
 
-model.compile("adam", loss=["binary_crossentropy", "mean_squared_error"], metrics=['AUC','mse'])
+model.compile("adam", loss=["binary_crossentropy", "mean_squared_error"], metrics=['AUC','mae'])
 
 model.fit(X_train, [y_task1, y_task2], batch_size=256, epochs=5, verbose=2)
 
-pred_ans = model.predict(X_test, batch_size=256)
+y_pred = model.predict(X_test, batch_size=256)
+
 
 ```
 
